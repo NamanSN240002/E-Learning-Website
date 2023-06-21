@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}
+    Update Profile
+{% endblock %}
+{% block style %}
+    <style>
+    </style>
+{% endblock %}
+{% block content %}
+<section class="text-center">
+    <h1 class="p-5 fw-bold">Update Profile</h1>
+    <div class="container">
+        <form action="" method="POST" enctype="multipart/form-data" class="form-register p-5 rounded-5" style="color:white;background-color:#F45050;">
+            {{ form.hidden_tag()}}
+            <img src="https://img.freepik.com/free-vector/sign-concept-illustration_114360-125.jpg?w=740&t=st=1686149623~exp=1686150223~hmac=4a8a1946394a7b40fce12910975ed62ed06e3ae91e78b4289bf1b1ca8e4bab64" class="w-50 h-50" alt="">
+            <br>
+            {{form.name.label()}}
+            {{form.name(class="form-control",placeholder="")}}
+
+            {{form.li_link.label()}}
+            {{form.li_link(class="form-control",placeholder="")}}
+            
+            <label>Avatar:</label>
+            <input type="file" class="form-control" name="Picture">
+
+
+            {{form.about_me.label()}}
+            {{form.about_me(class="form-control",placeholder="About Me")}}
+            
+            <br>
+            {{ form.submit(class="btn btn-lg btn-block btn-primary")}}
+        </form>
+    </div>
+</section>    
+{% endblock %}

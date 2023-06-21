@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}
+    Register
+{% endblock %}
+{% block style %}
+    <style>
+    </style>
+{% endblock %}
+{% block content %}
+<section class="text-center">
+    <h1 class="p-5 fw-bold">Registeration Form</h1>
+    <div class="container">
+        <form action="" method="POST" class="form-register p-5 rounded-5" style="color:white;background-color:#3C486B;">
+            {{ form.hidden_tag()}}
+            <h1>Please Create your Account</h1>
+            <img src="https://img.freepik.com/free-vector/sign-concept-illustration_114360-125.jpg?w=740&t=st=1686149623~exp=1686150223~hmac=4a8a1946394a7b40fce12910975ed62ed06e3ae91e78b4289bf1b1ca8e4bab64" class="w-50 h-50" alt="">
+            <br>
+            {{form.username.label()}}
+            {{form.username(class="form-control",placeholder="User Name")}}
+
+            {{form.name.label()}}
+            {{form.name(class="form-control",placeholder="Name")}}
+            
+            {{form.email_address.label()}}
+            {{form.email_address(class="form-control",placeholder="Email Address")}}
+            
+            {{form.phone_no.label()}}
+            {{form.phone_no(class="form-control",placeholder="Phone Number")}}
+
+            {{form.password1.label()}}
+            {{form.password1(class="form-control",placeholder="Password")}}
+            
+            {{form.password2.label()}}
+            {{form.password2(class="form-control",placeholder="Confirm Password")}}
+            
+            <br>
+            <div class="checckbox mb-3">
+                <h6>Do you have an account?</h6>
+                <a href="{{url_for('login_page')}}" class="btn btn-sm btn-secondary">Login</a>
+            </div>
+            
+            {{ form.submit(class="btn btn-lg btn-block btn-primary")}}
+        </form>
+    </div>
+</section>    
+{% endblock %}

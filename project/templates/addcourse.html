@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}
+    Add Course
+{% endblock %}
+{% block style %}
+{% endblock %}
+{% block content %}
+<section class="text-center">
+    <h1 class="p-5 fw-bold">Add course</h1>
+    <div class="container">
+        <form action="" method="POST" enctype="multipart/form-data" class="form-register p-5 rounded-5" style="color:white;background-color:#3C486B;">
+            {{ form.hidden_tag()}}
+
+            {{form.name.label()}}
+            {{form.name(class="form-control",placeholder="Name")}}
+
+            {{form.Author.label()}}
+            {{form.Author(class="form-control",placeholder="Author")}}
+            
+            {{form.description.label()}}
+            {{form.description(class="form-control",placeholder="Description")}}
+            
+            <label>Course Image:</label>
+            <input type="file" class="form-control" name="Picture" required>
+
+            {{form.what_you_will_learn.label()}}
+            {{form.what_you_will_learn(style='list-style-type: none;max-height:100px;overflow:scroll;background-color:black')}}
+            
+
+            {{form.tutorials.label()}}
+            {{form.tutorials(class="form-control",placeholder="Tutorials")}}
+            
+            <br>
+            {{ form.submit(class="btn btn-lg btn-block btn-primary")}}
+        </form>
+    </div>
+</section>    
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}

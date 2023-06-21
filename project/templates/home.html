@@ -1,0 +1,65 @@
+{% extends 'base.html'%}
+
+{% block title%}
+Home
+{% endblock %}
+{% block style%}
+<style>
+    .card{
+        background-color: #F9D949;
+    }
+</style>
+{% endblock %}
+
+{% block content%}
+    <div class="row">
+        <div class="col-7 ">
+            <h1 class="text-uppercase fs-1 text-center fw-bold d-flex justify-content-center align-self-center m-5">
+                Welcome to <br> E-Learning Website!
+            </h1>
+        </div>
+        <div class="col-5">
+            <img  class="w-100 h-auto" src="https://img.freepik.com/free-vector/webinar-concept-illustration_114360-4764.jpg?w=1380&t=st=1686064279~exp=1686064879~hmac=21cfe1668ea255de2c85c424670fd515014e35de6dbf7858d44c370f1a2774de" alt="Illustration1">
+        </div>
+        
+    </div>
+    
+    <div class="row" style="@media (min-width:600px){height:600px;overflow:hidden;}">
+        <div id="carouselExampleAutoplaying" class="carousel slide p-5" style="background-color:#3C486B;" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img  src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/935px-Python-logo-notext.svg.png" class="rounded mx-auto d-block w-25" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/ISO_C%2B%2B_Logo.svg/1200px-ISO_C%2B%2B_Logo.svg.png" class="rounded mx-auto d-block w-25" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="https://logos-world.net/wp-content/uploads/2022/07/Java-Logo.png" class="rounded mx-auto d-block w-50" alt="...">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+    </div>
+
+    {% for course in courses %}
+    <div class="col-6 m-2 p-2 ">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{course.name}}</h5>
+          <p class="card-text">{{course.description}}</p>
+          <a href="/course/{{course.id}}" class="btn btn-primary">Go to Course Page</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+   
+
+{% endblock %}
