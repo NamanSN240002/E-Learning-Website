@@ -47,7 +47,6 @@ class AddCourseForm(FlaskForm):
     description = StringField(label='Course Description:', validators=[Length(min=2,max=1024),DataRequired()])
     what_you_will_learn = MultiCheckboxField(label='What you will learn:')
 
-    # comments = db.relationship("CommentModel", secondary="comment")
     tutorials = StringField(label='Tutorial ID:',validators=[Length(min=2,max=50),DataRequired()])
     submit = SubmitField(label='Add Course')
 

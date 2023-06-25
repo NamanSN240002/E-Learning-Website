@@ -1,7 +1,7 @@
 from project import app
 from flask import render_template, redirect, url_for, flash, request
-from project.models import UserModel, CourseModel
-from project.forms import RegisterCourseForm, UnRegisterCourseForm, RegisterForm, LoginForm, UpdateProfileForm, AddCourseForm
+from project.models import UserModel, CourseModel, CommentModel
+from project.forms import  RegisterForm, LoginForm, UpdateProfileForm, AddCourseForm
 from project import db, allowed_file
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.utils import secure_filename
@@ -24,8 +24,9 @@ def about_page():
 @app.route('/searchResult', methods=['POST'])
 def search_result():
         search = request.form['search']
-        print(search)
-        return render_template('search.html',searchRes=search)
+        check = '%'+search+'%'
+        courses = CourseModel.query.filter(CourseModel.what_you_will_learn.ilike(check))
+        return render_template('search.html',searchRes=search,courses=courses)
 
 @app.route('/profile')
 @login_required
@@ -58,7 +59,23 @@ def update_profile():
 @login_required
 def course_page(courseid):
         course = CourseModel.query.filter_by(id=courseid).first()
-        return render_template('course.html',course=course)
+        comments = CommentModel.query.filter_by(course_id=courseid)        
+        return render_template('course.html',course=course,comments=comments)
+
+@app.route('/addComment',methods=['GET','POST'])
+@login_required
+def addComment():
+        messageContent = request.form.get("messageContent")
+        courseId = request.form.get("courseId")
+        new_comment = CommentModel(
+                student_id = current_user.id,
+                username = current_user.username,
+                course_id =courseId,
+                messageContent = messageContent
+        )
+        db.session.add(new_comment)
+        db.session.commit()
+        return redirect('/course/'+str(courseId))
 
 @app.route('/addCourse',methods=['GET','POST'])
 @login_required
@@ -72,8 +89,9 @@ def add_course():
                         filename = secure_filename(file.filename)
                         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 strtemp = ''
-                strtemp.join(form.what_you_will_learn.data)
-                
+                for s in form.what_you_will_learn.data:
+                        strtemp+=s
+                        strtemp+='|'
                 course_to_create= CourseModel(
                                         name=form.name.data,
                                         Author=form.Author.data,
@@ -91,6 +109,20 @@ def add_course():
                 for err_msg in form.errors.values():
                         flash(f'There was an error with creating a user: {err_msg}', category='danger')
         return render_template('addcourse.html',form=form)
+
+@app.route('/courseremoval')
+@login_required
+def remove_course_page():
+        courses = CourseModel.query.filter_by(owner=current_user.id)
+        return render_template('removecourse.html',courses=courses)
+
+@app.route('/removecourse',methods=['GET','POST'])
+@login_required
+def remove_course():
+        id_ = request.form.get('id_')
+        CourseModel.query.filter_by(id=id_).delete()
+        db.session.commit()
+        return redirect(url_for('remove_course_page'))
 
 
 @app.route('/register', methods=['GET','POST'])

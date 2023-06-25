@@ -19,10 +19,6 @@ class UserModel(db.Model, UserMixin):
         about_me = db.Column(db.String(1000), nullable=True)
         li_link = db.Column(db.Text(), nullable=True)
 
-        courses_owned = db.relationship("CourseModel",lazy=True)
-        courses = db.relationship("CourseModel", secondary="course_enrolled")
-        comments = db.relationship("CommentModel",secondary="course")
-
         @property
         def password(self):
                 return self.password
@@ -41,42 +37,25 @@ class CourseModel(db.Model):
         id = db.Column(db.Integer(),primary_key=True)
         name = db.Column(db.String(length=30),nullable=False,unique=True)
         Author = db.Column(db.String(), nullable=False)
-        description = db.Column(db.String(length=1024),nullable=False,unique=True)
+        description = db.Column(db.String(length=1024),nullable=False,unique=False)
         owner = db.Column(db.Integer(), db.ForeignKey('user.id'), nullable=False)
         course_image = db.Column(db.Text(), nullable=True)
         what_you_will_learn = db.Column(db.String(length=1024))
 
-        # comments = db.relationship("CommentModel", secondary="comment")
         tutorials = db.Column(db.String(length=1024))
         def __repr__(self):
                 return f'Course {self.name}'
         
 
-class CourseEnrolledModel(db.Model):
-    __tablename__ = "course_enrolled"
-
-    student_id = db.Column(db.ForeignKey("user.id"), primary_key=True)
-    course_id = db.Column(db.ForeignKey("course.id"), primary_key=True)
-    is_finished = db.Column(db.Boolean())
-
-    # course = db.relationship("CourseModel", backref="user_associations")
-    # user = db.relationship("UserModel", backref="course_associations")
-
-
-    def __repr__(self):
-        return f"CourseEnrolledModel(student_id={self.student_id}, course_id={self.course_id}, is_finished={self.is_finished})"
-
-
 
 class CommentModel(db.Model):
     __tablename__ = "comment"
 
-    student_id = db.Column(db.ForeignKey("user.id"), primary_key=True)
-    course_id = db.Column(db.ForeignKey("course.id"), primary_key=True)
+    id = db.Column(db.Integer(),primary_key=True)
+    student_id = db.Column(db.Integer(), db.ForeignKey('user.id'), nullable=False)
+    username = db.Column(db.String(length=30),nullable=False)
+    course_id = db.Column(db.Integer(), db.ForeignKey('course.id'), nullable=False)
     messageContent = db.Column(db.String(1000), nullable=False)
-
-    # course = db.relationship("CourseModel", backref="user_associations")
-    # user = db.relationship("UserModel", backref="course_associations")
 
     def __repr__(self):
         return f"CommentModel(id={self.id}, username={self.username})"

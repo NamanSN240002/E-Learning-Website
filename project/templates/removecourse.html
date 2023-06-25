@@ -7,8 +7,8 @@ Search
 {% endblock %}
 
 {% block content %}
-    <h1 class="text-uppercase fs-1 text-center fw-bold d-flex justify-content-center align-self-center m-5">
-        Search result for {{searchRes}}:
+    <h1>
+        All {{searchRes}} Course:
     </h1>
     
     <div class="container">
@@ -35,6 +35,13 @@ Search
                           </div>
                       </div>
                   </div>
+                  <div class="col p-2 m-1">
+                    <form action="/removecourse" method="POST">
+                        <input type="hidden" name="id_" value="{{course.id}}">
+                        <input class="btn btn-danger" type="submit" value="Delete Course">
+                    </form>
+                  </div>
+                  
               </div>
           </section>
         {% endfor %}
